@@ -94,11 +94,11 @@ const ContactPage = () => {
             <h2 className="text-xl font-semibold text-primary">Contact Info</h2>
             <p className="text-gray-600">
               Madhav Tech Labs<br />
-              123 Innovation Street<br />
-              Pune, Maharashtra, India
+              Nyaymandir<br />
+              Vadodara, Gujarat, India
             </p>
-            <p className="text-gray-600">📞 +91 98765 43210</p>
-            <p className="text-gray-600">✉️ support@madhavtechlabs.com</p>
+            <p className="text-gray-600">📞 +91 9173337926</p>
+            <p className="text-gray-600">✉️ madhav.tech.labs07official@gmail.com</p>
             <div className="flex space-x-4 mt-4">
               <a href="#" className="text-primary hover:underline">Instagram</a>
               <a href="#" className="text-primary hover:underline">LinkedIn</a>

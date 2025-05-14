@@ -1,17 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Color Scheme - "Modern Minimal Pro" Palette */
-  --primary-color: #0b2545;
-  /* Blue Midnight */
+  /* Color Scheme - Luxurious Blue-Green Palette */
+  --primary-color: #0a5f6c;
+  --primary-light: #1a7f8c;
+  --primary-dark: #064954;
+
   --secondary-color: #f8f9fa;
-  /* Ivory White */
-  --accent-color: #ffb100;
-  /* Bright Amber */
-  --secondary-accent-color: #6c757d;
-  /* Graphite Gray */
+
+  --accent-color: #00c9a7;
+  --accent-light: #33d6b9;
+  --accent-dark: #00a589;
+
+  --complementary-color: #c9a700;
+  --complementary-light: #e6c000;
+  --complementary-dark: #a38900;
 }
 
 @layer base {
@@ -26,18 +33,21 @@
   h1,
   h2,
   h3,
-  h4,
+  h4 {
+    @apply font-display text-primary;
+  }
+
   h5,
   h6 {
-    @apply font-bold text-primary;
+    @apply font-sans font-bold text-primary;
   }
 
   h1 {
-    @apply text-4xl md:text-5xl;
+    @apply text-4xl md:text-5xl lg:text-6xl;
   }
 
   h2 {
-    @apply text-3xl md:text-4xl;
+    @apply text-3xl md:text-4xl lg:text-5xl;
   }
 
   h3 {
@@ -63,34 +73,263 @@
   }
 
   .btn {
-    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium transition-all duration-300 rounded-md;
+    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium transition-all duration-300 rounded-md shadow-sm;
   }
 
   .btn-primary {
-    @apply text-white bg-primary hover:bg-primary/90;
+    @apply text-white bg-primary hover:bg-primary-light active:bg-primary-dark;
   }
 
   .btn-secondary {
-    @apply text-primary bg-secondary border border-primary hover:bg-primary/10;
+    @apply text-primary bg-white border border-primary hover:bg-light-teal;
   }
 
   .btn-accent {
-    @apply text-primary bg-accent hover:bg-accent/90;
+    @apply text-primary bg-accent hover:bg-accent-light active:bg-accent-dark;
   }
 
-  .btn-secondary-accent {
-    @apply text-primary bg-secondary-accent hover:bg-secondary-accent/90;
+  .btn-complementary {
+    @apply text-white bg-complementary hover:bg-complementary-light active:bg-complementary-dark;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary bg-transparent hover:bg-light-teal;
   }
 
   .section {
-    @apply py-12 md:py-20;
+    @apply py-12 md:py-20 lg:py-24;
   }
 
   .card {
     @apply overflow-hidden transition-all duration-300 bg-white rounded-lg shadow-md hover:shadow-lg;
   }
 
+  .card-premium {
+    @apply overflow-hidden transition-all duration-300 bg-white rounded-lg shadow-custom-lg border border-accent/20;
+  }
+
   .input {
     @apply w-full px-4 py-3 border rounded-md outline-none border-gray-300 focus:border-accent focus:ring-1 focus:ring-accent;
   }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply bg-primary/10 text-primary;
+  }
+
+  .badge-accent {
+    @apply bg-accent/10 text-accent-dark;
+  }
+
+  .badge-gold {
+    @apply bg-gold/10 text-gold;
+  }
+
+  /* Animations */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+
+  /* Decorative elements */
+  .decorative-circle {
+    @apply absolute rounded-full opacity-50 pointer-events-none;
+  }
+
+  .decorative-square {
+    @apply absolute opacity-50 pointer-events-none transform rotate-45;
+  }
+
+  /* Responsive typography */
+  .responsive-heading {
+    @apply text-3xl md:text-4xl lg:text-5xl font-display font-bold;
+  }
+
+  .responsive-subheading {
+    @apply text-xl md:text-2xl font-medium text-primary/80;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-light-teal;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/50 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary;
+}
+
+/* Utility classes for text gradients */
+.text-gradient-primary {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent;
+}
+
+.text-gradient-gold {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-gold to-complementary-light;
+}
+
+/* Custom Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fadeInScale {
+  animation: fadeInScale 0.6s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.6s ease-out forwards;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Improved focus styles for accessibility */
+*:focus-visible {
+  @apply outline-none ring-2 ring-accent ring-offset-2;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .container {
+    @apply px-5;
+  }
+
+  .btn {
+    @apply px-5 py-2.5 text-sm;
+  }
+
+  .section {
+    @apply py-10;
+  }
+}
+
+/* Scroll animations */
+.reveal {
+  position: relative;
+  opacity: 0;
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+}
+
+.reveal.fade-bottom {
+  transform: translateY(50px);
+}
+
+.reveal.fade-bottom.active {
+  transform: translateY(0);
+}
+
+.reveal.fade-left {
+  transform: translateX(-50px);
+}
+
+.reveal.fade-left.active {
+  transform: translateX(0);
+}
+
+.reveal.fade-right {
+  transform: translateX(50px);
+}
+
+.reveal.fade-right.active {
+  transform: translateX(0);
 }

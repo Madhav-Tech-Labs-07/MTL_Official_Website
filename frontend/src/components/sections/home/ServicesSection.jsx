@@ -1,14 +1,64 @@
+"use client"
+
 import { Link } from "react-router-dom"
+import { useEffect, useRef } from "react"
 import SectionHeading from "../../ui/SectionHeading"
 import ServiceCard from "../../ui/ServiceCard"
 
 const ServicesSection = () => {
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    const revealElements = document.querySelectorAll(".reveal")
+
+    const reveal = () => {
+      revealElements.forEach((element) => {
+        const windowHeight = window.innerHeight
+        const elementTop = element.getBoundingClientRect().top
+        const elementVisible = 150
+
+        if (elementTop < windowHeight - elementVisible) {
+          element.classList.add("active")
+        }
+      })
+    }
+
+    window.addEventListener("scroll", reveal)
+    reveal() // Call once on load
+
+    return () => {
+      window.removeEventListener("scroll", reveal)
+    }
+  }, [])
+
   // Featured services data
   const featuredServices = [
     {
-      title: "Social Media Designs",
+      title: "Website Design",
       description:
-        "Eye-catching designs for Instagram, Facebook, Twitter and more to boost your social media presence.",
+        "Professional, responsive websites for businesses in Vadodara. From digital cards to multi-page sites.",
+      icon: (
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+          ></path>
+        </svg>
+      ),
+      category: "website-design",
+      price: "₹300 - ₹4,500",
+    },
+    {
+      title: "Social Media Designs",
+      description: "Eye-catching designs for Instagram, Facebook, and WhatsApp to boost your social media presence.",
       icon: (
         <svg
           className="w-6 h-6"
@@ -26,6 +76,51 @@ const ServicesSection = () => {
         </svg>
       ),
       category: "social-media-designs",
+      price: "₹300 - ₹1,500",
+    },
+    {
+      title: "Document & Presentation",
+      description: "Professional resumes, business proposals, and presentations designed for impact.",
+      icon: (
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          ></path>
+        </svg>
+      ),
+      category: "documents",
+      price: "₹200 - ₹1,000",
+    },
+    {
+      title: "Teaching & Ed-Tech",
+      description: "Digital solutions for tutors and coaching institutes in Vadodara, including online class setup.",
+      icon: (
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+          ></path>
+        </svg>
+      ),
+      category: "teaching-edtech",
+      price: "₹50 - ₹1,000",
     },
     {
       title: "Business & Branding",
@@ -47,31 +142,11 @@ const ServicesSection = () => {
         </svg>
       ),
       category: "business-branding",
+      price: "₹200 - ₹3,000",
     },
     {
-      title: "Marketing Collaterals",
-      description: "Compelling marketing materials like brochures, flyers, posters and product labels.",
-      icon: (
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"
-          ></path>
-        </svg>
-      ),
-      category: "marketing",
-    },
-    {
-      title: "Backend & API Services",
-      description: "Technical solutions including API integration, payment gateways, and automation services.",
+      title: "Digital Setup Services",
+      description: "WhatsApp Business setup, Google Forms, Drive organization, and more for your digital presence.",
       icon: (
         <svg
           className="w-6 h-6"
@@ -88,25 +163,31 @@ const ServicesSection = () => {
           ></path>
         </svg>
       ),
-      category: "backend",
+      category: "digital-setup",
+      price: "₹200 - ₹800",
     },
   ]
 
   return (
-    <section className="relative section py-16 md:py-24 bg-gray-50">
+    <section
+      ref={sectionRef}
+      className="relative section py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white overflow-hidden"
+    >
       {/* Decorative Elements */}
       <div className="absolute top-10 left-10 w-20 h-20 bg-primary/5 rounded-full hidden md:block"></div>
       <div className="absolute bottom-10 right-10 w-16 h-16 bg-accent/10 rotate-12 hidden md:block"></div>
       <div className="absolute top-1/4 right-1/3 w-5 h-5 bg-accent/20 rounded-full hidden md:block"></div>
 
       <div className="container relative z-10">
-        <SectionHeading
-          title="Our Popular Services"
-          subtitle="From social media designs to backend solutions, we've got you covered"
-          centered={true}
-        />
+        <div className="reveal fade-bottom">
+          <SectionHeading
+            title="Our Popular Services"
+            subtitle="From website design to digital solutions, we've got Vadodara businesses covered"
+            centered={true}
+          />
+        </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredServices.map((service, index) => (
             <ServiceCard
               key={index}
@@ -114,18 +195,44 @@ const ServicesSection = () => {
               description={service.description}
               icon={service.icon}
               category={service.category}
+              price={service.price}
             />
           ))}
         </div>
 
-        <div className="mt-12 text-center">
-          <Link to="/services" className="btn btn-primary">
-            View All Services
+        <div className="mt-12 text-center reveal fade-bottom">
+          <Link
+            to="/services"
+            className="btn btn-primary group relative overflow-hidden"
+            style={{
+              transition: "all 0.3s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-2px)"
+              e.currentTarget.style.boxShadow = "0 10px 25px rgba(10, 95, 108, 0.2)"
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)"
+              e.currentTarget.style.boxShadow = ""
+            }}
+          >
+            <span className="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-[-8px]">
+              View All Services
+            </span>
+            <svg
+              className="w-0 h-0 inline-block transition-all duration-300 group-hover:w-5 group-hover:h-5 group-hover:ml-2 opacity-0 group-hover:opacity-100 relative z-10"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+            <div className="absolute top-0 left-0 w-full h-full bg-primary-light opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </Link>
         </div>
       </div>
 
-      {/* Wave Divider */}
+      {/* Clean Wave Divider */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
         <svg
           className="relative block w-full h-12 md:h-16"
@@ -134,17 +241,7 @@ const ServicesSection = () => {
           preserveAspectRatio="none"
         >
           <path
-            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
-            opacity=".25"
-            className="fill-white"
-          ></path>
-          <path
-            d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
-            opacity=".5"
-            className="fill-white"
-          ></path>
-          <path
-            d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
             className="fill-white"
           ></path>
         </svg>

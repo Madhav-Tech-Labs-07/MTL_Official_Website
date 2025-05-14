@@ -1,4 +1,7 @@
-import { Routes, Route } from "react-router-dom"
+"use client"
+
+import { Routes, Route, useLocation } from "react-router-dom"
+import { useEffect } from "react"
 import Header from "./components/layout/Header"
 import Footer from "./components/layout/Footer"
 import MobileNavigation from "./components/layout/MobileNavigation"
@@ -13,6 +16,13 @@ import BlogPage from "./pages/BlogPage"
 import NotFoundPage from "./pages/NotFoundPage"
 
 function App() {
+  const location = useLocation()
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
+
   return (
     <div className="flex flex-col min-h-screen bg-off-white">
       <Header />

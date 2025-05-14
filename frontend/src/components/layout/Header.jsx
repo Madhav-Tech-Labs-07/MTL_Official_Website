@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Link, NavLink } from "react-router-dom"
+import { AnimatePresence } from "framer-motion"
 import Logo from "../ui/Logo"
 
 const Header = () => {
@@ -92,79 +93,83 @@ const Header = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <button className="p-2 md:hidden" onClick={toggleMenu} aria-label="Toggle menu">
-          {isMenuOpen ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          )}
+        <button className="p-2 md:hidden" onClick={toggleMenu} aria-label="Toggle menu" aria-expanded={isMenuOpen}>
+          <div className="w-6 h-6 flex flex-col justify-center items-center relative">
+            <span
+              className={`block w-6 h-0.5 bg-primary rounded-full transition-all duration-300 ${
+                isMenuOpen ? "absolute rotate-45" : "mb-1.5"
+              }`}
+            ></span>
+            <span
+              className={`block w-6 h-0.5 bg-primary rounded-full transition-all duration-300 ${
+                isMenuOpen ? "opacity-0" : ""
+              }`}
+            ></span>
+            <span
+              className={`block w-6 h-0.5 bg-primary rounded-full transition-all duration-300 ${
+                isMenuOpen ? "absolute -rotate-45" : "mt-1.5"
+              }`}
+            ></span>
+          </div>
         </button>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="absolute top-full left-0 w-full bg-white shadow-md md:hidden">
-            <nav className="container py-4">
-              <ul className="flex flex-col space-y-2">
-                <li>
-                  <NavLink to="/" className={navLinkClass} onClick={toggleMenu}>
-                    Home
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/services" className={navLinkClass} onClick={toggleMenu}>
-                    Services
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/pricing" className={navLinkClass} onClick={toggleMenu}>
-                    Pricing
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/portfolio" className={navLinkClass} onClick={toggleMenu}>
-                    Portfolio
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/about" className={navLinkClass} onClick={toggleMenu}>
-                    About
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/contact" className={navLinkClass} onClick={toggleMenu}>
-                    Contact
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/blog" className={navLinkClass} onClick={toggleMenu}>
-                    Blog
-                  </NavLink>
-                </li>
-                <li className="pt-2">
-                  <Link to="/contact" className="btn btn-accent w-full text-center" onClick={toggleMenu}>
-                    Let's Connect !
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        )}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <div
+              className="absolute top-full left-0 w-full bg-white shadow-md md:hidden"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <nav className="container py-4">
+                <ul className="flex flex-col space-y-2">
+                  <li>
+                    <NavLink to="/" className={navLinkClass} onClick={toggleMenu}>
+                      Home
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/services" className={navLinkClass} onClick={toggleMenu}>
+                      Services
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/pricing" className={navLinkClass} onClick={toggleMenu}>
+                      Pricing
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/portfolio" className={navLinkClass} onClick={toggleMenu}>
+                      Portfolio
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/about" className={navLinkClass} onClick={toggleMenu}>
+                      About
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/contact" className={navLinkClass} onClick={toggleMenu}>
+                      Contact
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/blog" className={navLinkClass} onClick={toggleMenu}>
+                      Blog
+                    </NavLink>
+                  </li>
+                  <li className="pt-2">
+                    <Link to="/contact" className="btn btn-accent w-full text-center" onClick={toggleMenu}>
+                      Let's Connect !
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   )
